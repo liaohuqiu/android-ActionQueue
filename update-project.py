@@ -1,6 +1,6 @@
 import os
 vars = {
-        'lib_version': '1.0.1-SNAPSHOT',
+        'lib_version': '1.0.1',
         }
 
 files = [
@@ -29,7 +29,7 @@ def update_var_for_file(file, vars):
 
 real_vars = {}
 for src, target in vars.iteritems():
-    real_vars['{' + src + '}'] = target
+    real_vars['{$' + src + '}'] = target
 
 for f in files:
     update_var_for_file(f, real_vars)
