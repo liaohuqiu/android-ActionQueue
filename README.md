@@ -52,7 +52,21 @@ compile 'in.srain.cube:action-queue:1.0.1'
         public void onAction() {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             Dialog dialog = builder.setMessage(getBadge()).show();
+            // notify action is done, and next aciton will be executed
             dialog.setOnDismissListener(mOnDismissListener);
         }
     }
     ```
+
+* notify when action is done
+
+    ```java
+    DialogInterface.OnDismissListener mOnDismissListener = new DialogInterface.OnDismissListener() {
+        @Override
+        public void onDismiss(DialogInterface dialog) {
+            mActionQueue.notifyActionDoneThenTryToPopNext();
+        }
+    };
+    ```
+
+
