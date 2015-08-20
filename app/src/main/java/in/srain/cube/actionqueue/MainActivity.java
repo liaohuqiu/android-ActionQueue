@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import in.srain.cube.actionqueque.ActionQueue;
 
 public class MainActivity extends Activity {
@@ -31,6 +32,19 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        findViewById(R.id.action_show_dialog_without_queue).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogWithOutQueue();
+            }
+        });
+
+        findViewById(R.id.action_show_dialog_with_queue).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogWithQueue();
+            }
+        });
     }
 
     @Override
@@ -38,6 +52,24 @@ public class MainActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    private void showDialogWithQueue() {
+        for (int i = 0; i < mMessageList.length; i++) {
+            String message = mMessageList[i];
+            PopDialogAction action = new PopDialogAction(message);
+            mActionQueue.add(action);
+        }
+    }
+
+    private void showDialogWithOutQueue() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        for (int i = 0; i < mMessageList.length; i++) {
+            String message = mMessageList[i];
+            builder.setMessage(message).show();
+        }
     }
 
     @Override
@@ -49,25 +81,13 @@ public class MainActivity extends Activity {
 
         // using action queue to pop dialog
         if (id == R.id.action_show_dialog_with_queue) {
-
-            Context context = this;
-            for (int i = 0; i < mMessageList.length; i++) {
-                String message = mMessageList[i];
-                PopDialogAction action = new PopDialogAction(message);
-                mActionQueue.add(action);
-            }
+            showDialogWithQueue();
             return true;
         }
 
         // pop dialog one by one, the one pop later will overlap the one popped previously.
         if (id == R.id.action_show_dialog_without_queue) {
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-            for (int i = 0; i < mMessageList.length; i++) {
-                String message = mMessageList[i];
-                builder.setMessage(message).show();
-            }
+            showDialogWithOutQueue();
             return true;
         }
 
@@ -75,7 +95,6 @@ public class MainActivity extends Activity {
     }
 
     class PopDialogAction extends ActionQueue.Action<String> {
-
 
         public PopDialogAction(String badge) {
             super(badge);
