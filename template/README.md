@@ -1,5 +1,7 @@
 ActionQueue allows you run action one by one.
 
+<div><img src='https://raw.githubusercontent.com/liaohuqiu/android-ActionQueue/master/images/screen-snapshot.gif' width="300px" style='border: #f1f1f1 solid 1px'/></div>
+
 #### Import
 
 Repositories:
