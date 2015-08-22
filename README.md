@@ -73,4 +73,6 @@ compile 'in.srain.cube:action-queue:1.0.1'
     };
     ```
 
+* LICENSE: MIT
+
 
